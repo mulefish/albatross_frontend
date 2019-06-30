@@ -7,6 +7,9 @@
   text-align: center;
 
 }
+.highlight { 
+  background-color:#ffae42;
+}
 .metaCell { 
   background-color:#fff;
   height:35px;

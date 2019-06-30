@@ -23,9 +23,17 @@ class App extends React.Component {
       </div>
     ); 
   }
-  handleChildClick(param1, param2  ) {
-
-    console.log("ZooM! clicked on " + param1 + " and " + param2 )
+  handleChildClick(cellId, row, column  ) {
+      let cell = document.getElementById(cellId) 
+      if ( cell.classList.contains("highlight")) {
+        cell.classList.remove("highlight")
+      } else {
+        cell.classList.add("highlight")
+      }
+      var newDiv = document.createElement("div"); 
+      newDiv.className="blackCircle"
+      cell.append(newDiv)
+      console.log("YAY! ")
   }
 }
 export default App;

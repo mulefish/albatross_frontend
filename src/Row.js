@@ -12,8 +12,6 @@ class Row extends React.Component {
     }
     render() {
         let row = [] 
-        
-
 
         if ( this.props.rowId === 0 ) { 
             // The top header
@@ -28,7 +26,7 @@ class Row extends React.Component {
                 let colId = j + 1
                 const id = this.props.rowId + "_" + colId  
 //                row.push(<td key={id} className='cell' onClick={(e)=>this.props.onClick(this.props.rowId,colId)}><div className='blackCircle'>{id}</div></td>)
-                row.push(<td key={id} className='cell' onClick={(e)=>this.props.onClick(this.props.rowId,colId)}>{id}</td>)
+                row.push(<td key={id} id={id} className='cell' onClick={(e)=>this.props.onClick(id,this.props.rowId, colId)}></td>)
             } 
         } 
         return (
