@@ -1,37 +1,18 @@
 import React from 'react';
-import { thisExpression } from '@babel/types';
 import Row from './Row';
-/*
-class Row extends React.Component {
-  render() {
-    let x = [] 
-    if ( this.props.rowId === 0 ) { 
-      x.push(<td key={0}></td>)
-      for ( let  i = 1 ; i < this.props.boardSize; i++ ) {
-        x.push(<td className='metaCell' key={i} >{i}</td>)
-      }
-    } else {
-      x.push(<td className='metaCell' key={0}>{this.props.rowId}</td>)
-      for ( let  i = 1 ; i < this.props.boardSize; i++ ) {
-        let pId = this.props.rowId + "_" + i 
-        x.push(<td className='cell' key={i} onClick={(e)=>this.props.onClick(this.props.rowId, i)}><div key={pId} id={pId}></div></td>)
-      }
-    } 
-    return (
-      <tr>{x}</tr>
-    )
-  }
-}
-*/ 
+
 const NILL = 'nill'
 const WHITE = 'white'
 const BLACK = 'black'
+const WHITE_PIECE = "whiteCircle"
+const BLACK_PIECE = "blackCircle"
+
 class App extends React.Component {
   constructor(props){ 
     super(props);
     this.clickOnCell = this.clickOnCell.bind(this);
     this.board = [] 
-    const boardSize = 19
+    const boardSize = 20  
     let lookup = {} 
     for( let i = 1; i < boardSize; i++ ) {
       lookup[i] = [] 
@@ -44,7 +25,6 @@ class App extends React.Component {
       }
     }
     this.state = {
-        finch:"wren", 
         boardSize:boardSize,
         lookup:lookup,
         nextTurn:BLACK
@@ -79,15 +59,15 @@ class App extends React.Component {
       let x = document.getElementById("showTurn")
       if ( this.state.nextTurn === BLACK ) {
         this.setState({nextTurn:WHITE})
-        x.classList.remove("blackCircle")
-        x.classList.add("whiteCircle")
-        cell.classList.add("blackCircle")
+        x.classList.remove(BLACK_PIECE)
+        x.classList.add(WHITE_PIECE)
+        cell.classList.add(BLACK_PIECE)
         this.updateOwnerOfCell(row, col, BLACK)
        } else {
         this.setState({nextTurn:BLACK})
-        x.classList.remove("whiteCircle")
-        x.classList.add("blackCircle")
-        cell.classList.add("whiteCircle")
+        x.classList.remove(WHITE_PIECE)
+        x.classList.add(BLACK_PIECE)
+        cell.classList.add(WHITE_PIECE)
         this.updateOwnerOfCell(row, col, WHITE)
       }
     }
@@ -104,7 +84,7 @@ class App extends React.Component {
           <tbody>
           <tr>
             <td className="cell">
-              <div id='showTurn' className="blackCircle"></div>
+              <div id='showTurn' className={BLACK_PIECE}></div>
             </td>
             <td className='button' onClick={this.showBlackInfluence}>Black Influence</td>
             <td className='button' onClick={this.showWhiteInfluence}>White Influence</td>
