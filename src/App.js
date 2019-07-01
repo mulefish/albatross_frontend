@@ -1,9 +1,8 @@
 import React from 'react';
 import { thisExpression } from '@babel/types';
-//import Row from './Row';
-
-
-class Child extends React.Component {
+import Row from './Row';
+/*
+class Row extends React.Component {
   render() {
     let x = [] 
     if ( this.props.rowId === 0 ) { 
@@ -23,6 +22,7 @@ class Child extends React.Component {
     )
   }
 }
+*/ 
 const NILL = 'nill'
 const WHITE = 'white'
 const BLACK = 'black'
@@ -72,8 +72,6 @@ class App extends React.Component {
     /// The cell 
     let cell = document.getElementById(row + "_" + col )
 
-
-
     /// The header
     let msg = this.getCellState(row, col) 
     document.getElementById("output").innerHTML = msg
@@ -97,7 +95,7 @@ class App extends React.Component {
   render() {
     let rows = [] 
     for ( let rowId = 0 ; rowId < this.state.boardSize; rowId++ ) { 
-      rows.push( <Child rowId={rowId} key={rowId} boardSize={this.state.boardSize} onClick={this.clickOnCell.bind()}></Child>
+      rows.push( <Row rowId={rowId} key={rowId} boardSize={this.state.boardSize} onClick={this.clickOnCell.bind()}></Row>
       )
     }
     return (
