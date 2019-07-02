@@ -9,18 +9,22 @@ class BackgroundTableRow extends React.Component {
         return (<tr key={Math.random()}>{cells}</tr>)
     }
 }
+
 class ForegroundTableRow extends React.Component { 
     render() { 
         let cells = [] 
         for ( let column  = 0; column < 19; column++ ) {
             let owner = this.props.data[column].owner
             let css = ""
+            let text = ""
             if ( owner === this.props.black ) {
                 css = "blackCircle"
+                text = this.props.data[column].turnCount
             } else if ( owner === this.props.white) {
                 css = "whiteCircle"
+                text = this.props.data[column].turnCount
             }
-            cells.push(<td className="cell2" key={Math.random()}  onClick={(e)=>this.props.onClick(this.props.row, column)}><div key={Math.random()} className={css}>{owner}</div></td>)
+            cells.push(<td className="cell2" key={Math.random()}  onClick={(e)=>this.props.onClick(this.props.row, column)}><center><div key={Math.random()} className={css}>{text}</div></center></td>)
         }
         return (<tr key={Math.random()}>{cells}</tr>)
     }
@@ -56,7 +60,7 @@ class Board extends React.Component {
         // stone placement and logic
         let fgRows = [] 
         for ( let rowIndex = 0 ; rowIndex < 19; rowIndex++ ) { 
-            fgRows.push(<ForegroundTableRow data={this.props.data[rowIndex]} row={rowIndex} key={Math.random()}  onClick={this.props.onClick.bind()} black={this.props.black} white={this.props.white} />)
+            fgRows.push(<ForegroundTableRow data={this.props.data[rowIndex]} row={rowIndex} key={Math.random()}  onClick={this.props.onClick.bind()} black={this.props.black} white={this.props.white} blackTurn={this.props.blackTurn} whiteTurn={this.props.whiteTurn}/>)
         }
 
 
