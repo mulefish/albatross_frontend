@@ -5,6 +5,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.clickOnCell = this.clickOnCell.bind(this);
+		this.setShowInfluenceToggle = this.setShowInfluenceToggle.bind(this)
 		this.black = "B"
 		this.white = "W"
 		this.turn = this.black
@@ -24,8 +25,18 @@ class App extends React.Component {
 			}
 		}
 		this.state = {
-			board: b
+			board: b,
+			showInfluence:true
 		}
+	}
+	setShowInfluenceToggle() { 
+		let x = this.state.showInfluence
+		if ( x === false ) {
+			x = true 
+		} else {
+			x = false
+		}
+		this.setState({showInfluence:x})
 	}
 	clickOnCell(row, column) {
 		let tmp = this.state.board
@@ -46,28 +57,27 @@ class App extends React.Component {
 		})
 	}
 	render() {
-		return ( <Board 
+		return ( 
 
-			black = {
-				this.black
-			}
-			white = {
-				this.white
-			}
-			data = {
-				this.state.board
-			}
-			key = {
-				Math.random()
-			}
-			board = {
-				this.state.board
-			}
-			onClick = {
-				this.clickOnCell.bind()
-			} > </Board>
+			<table>
+				<tbody>
+				<tr> 
+					<td>
+						<Board 
+							black = {this.black}
+							white = {this.white}
+							data = {this.state.board}
+							key = {Math.random()}
+							board = {this.state.board}
+							showInfluence={this.state.showInfluence}
+							onClick = {this.clickOnCell.bind()} 
+							onChange={this.setShowInfluenceToggle.bind()}
+						></Board>
+					</td>
+				</tr>
+				</tbody>
+			</table>
 		)
-	
 	}
 }
 export default App

@@ -31,21 +31,8 @@ class ForegroundTableRow extends React.Component {
 }
 
 class Board extends React.Component {
-    getClickPosition(e) {
-        var xPosition = e.clientX;
-        var yPosition = e.clientY;
-        console.log("X: " + xPosition + " y: " + yPosition )
-    }
 
     render() {  
-
-        for ( let rowIndex = 0 ; rowIndex < this.props.data.length; rowIndex++ ) {
-            for ( let colIndex = 0 ; colIndex < this.props.data[rowIndex].length; colIndex++ ) {
-                let x = this.props.data[rowIndex][colIndex]
-            //    console.log(x.owner)
-            }
-        }
-
 
         // Q: Foreground? Background? What is this? 
         // A: Both are tables. Foreground has a higher z-index
@@ -63,10 +50,9 @@ class Board extends React.Component {
             fgRows.push(<ForegroundTableRow data={this.props.data[rowIndex]} row={rowIndex} key={Math.random()}  onClick={this.props.onClick.bind()} black={this.props.black} white={this.props.white} blackTurn={this.props.blackTurn} whiteTurn={this.props.whiteTurn}/>)
         }
 
-
-
         return (
             <div>
+            <div id='parent' >
                 <table id='background'>
                     <tbody>
                         {bgRows}
@@ -77,6 +63,11 @@ class Board extends React.Component {
                         {fgRows}
                     </tbody>
                 </table>
+            </div>
+
+            
+            <input type='checkbox' id='showInfluence_widget' checked={this.props.showInfluence} onChange={(e)=>this.props.onChange()}></input>
+            <label htmlFor="showInfluence_widget"> Show Influence</label>
             </div>
         )
     }
