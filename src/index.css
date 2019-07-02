@@ -1,69 +1,33 @@
 
-.cell { 
+#background {
+  position:absolute;
+  left:26px;
+  top:26px;
+
+}
+#foreground {
+  position: absolute;
+  left:12px;
+  top:12px;
+  z-index:10;
+}
+
+.cell {
   background-color:#b5651d;
-  height:35px;
-  width:35px;
-  border: 3px solid brown;
-  text-align: center;
+  height:26px;
+  width:26px;
+}
+/*
+.cell:hover {
+  background-color: #ccc;
+}
+*/
 
+.cell2 {
+  height:26px;
+  width:26px;
 }
-.highlight { 
-  background-color:#ffae42;
-}
-.metaCell { 
-  background-color:#fff;
-  height:35px;
-  width:35px;
-  border: 3px solid brown;
-  text-align: center;
-
-}
-
-.button {
-  background-color:#00ffff;
-  height:35px;
-  border: 3px solid brown;
-  text-align: center;
-  padding-left:6px;
-  padding-right:6px;
-}
-.before_viewing {
-  background-color:#ffffff;
-}
-.after_viewing {
-  background-color:#00ffff;
-}
-.blackCircle {
-  background: #000;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  margin-left:6px;
-}
-.whiteCircle {
-  background: #fff;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  margin-left:6px;
-}
-/* 
-.blackCircle:before {
-  content: ' \25CF';
-  font-size: 45px;
-}
-*/ 
-  td {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome and Opera */
-  }
-#history_output {
-  width:400px;
-  border: 3px solid brown;
-
+.cell2:hover {
+  background: rgb(26,26,26); 
+  opacity: 0.33;
 }
