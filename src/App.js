@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from './components/Board';
+import SGF from './components/SGF';
 
 class App extends React.Component {
 	constructor(props) {
@@ -59,10 +60,10 @@ class App extends React.Component {
 	render() {
 		return ( 
 
-			<table>
+			<table border='1'>
 				<tbody>
 				<tr> 
-					<td>
+					<td rowSpan='2'>
 						<Board 
 							black = {this.black}
 							white = {this.white}
@@ -74,7 +75,18 @@ class App extends React.Component {
 							onChange={this.setShowInfluenceToggle.bind()}
 						></Board>
 					</td>
+				
+					<td>
+						<SGF key={Math.random()}></SGF>
+					</td>
 				</tr>
+				<tr>
+					<td>
+						three
+					</td>
+				</tr>
+
+
 				</tbody>
 			</table>
 		)

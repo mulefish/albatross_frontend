@@ -24,7 +24,17 @@ class ForegroundTableRow extends React.Component {
                 css = "whiteCircle"
                 text = this.props.data[column].turnCount
             }
-            cells.push(<td className="cell2" key={Math.random()}  onClick={(e)=>this.props.onClick(this.props.row, column)}><center><div key={Math.random()} className={css}>{text}</div></center></td>)
+            cells.push(
+                <td 
+                    className="cell2" 
+                    key={Math.random()}  
+                    onClick={(e)=>this.props.onClick(this.props.row, column)}
+                >
+                <center><div 
+                        key={Math.random()} 
+                        className={css}>{text}</div></center>
+                </td>
+            )
         }
         return (<tr key={Math.random()}>{cells}</tr>)
     }
@@ -47,27 +57,42 @@ class Board extends React.Component {
         // stone placement and logic
         let fgRows = [] 
         for ( let rowIndex = 0 ; rowIndex < 19; rowIndex++ ) { 
-            fgRows.push(<ForegroundTableRow data={this.props.data[rowIndex]} row={rowIndex} key={Math.random()}  onClick={this.props.onClick.bind()} black={this.props.black} white={this.props.white} blackTurn={this.props.blackTurn} whiteTurn={this.props.whiteTurn}/>)
+            fgRows.push(
+                <ForegroundTableRow 
+                    showInfluence={this.props.showInfluence} 
+                    data={this.props.data[rowIndex]} 
+                    row={rowIndex} 
+                    key={Math.random()} 
+                    onClick={this.props.onClick.bind()} 
+                    black={this.props.black} 
+                    white={this.props.white} 
+                    blackTurn={this.props.blackTurn} 
+                    whiteTurn={this.props.whiteTurn}
+                />
+            )
         }
 
         return (
             <div>
-            <div id='parent' >
-                <table id='background'>
-                    <tbody>
-                        {bgRows}
-                    </tbody>
-                </table>
-                <table id='foreground'>
-                    <tbody>
-                        {fgRows}
-                    </tbody>
-                </table>
-            </div>
-
-            
-            <input type='checkbox' id='showInfluence_widget' checked={this.props.showInfluence} onChange={(e)=>this.props.onChange()}></input>
-            <label htmlFor="showInfluence_widget"> Show Influence</label>
+                <div id='parent' >
+                    <table id='background'>
+                        <tbody>
+                            {bgRows}
+                        </tbody>
+                    </table>
+                    <table id='foreground'>
+                        <tbody>
+                            {fgRows}
+                        </tbody>
+                    </table>
+                </div>
+                <input 
+                    type='checkbox' 
+                    id='showInfluence_widget' 
+                    checked={this.props.showInfluence} 
+                    onChange={(e)=>this.props.onChange()}
+                ></input>
+                <label htmlFor="showInfluence_widget"> Show Influence</label>
             </div>
         )
     }
