@@ -2,30 +2,23 @@ import React from 'react';
 import Board from './components/Board';
 import SGF from './components/SGF';
 
-
-
-
-
 const number2letter = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t"]
-
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.clickOnCell = this.clickOnCell.bind(this);
 		this.setShowInfluenceToggle = this.setShowInfluenceToggle.bind(this)
-	//	this.setShowInfluenceToggle = this.setGame.bind(this)
-//		this.chooseDataset = this.chooseDataset.bind(this)
 		this.addSGFGame2 = this.addSGFGame2.bind(this)
 		this.black = "B"
 		this.white = "W"
 		this.turn = this.black
-		let b = []
+		let board = []
 		this.turnCount = 0 
 		for (let col = 0; col < 19; col++) {
-			b[col] = []
+			board[col] = []
 			for (let row = 0; row < 19; row++) {
-				b[col][row] = {
+				board[col][row] = {
 					black: 0,
 					white: 0,
 					col: col,
@@ -36,20 +29,11 @@ class App extends React.Component {
 			}
 		}
 		this.state = {
-			board: b,
+			board: board,
 			showInfluence:true,
 			game:[]
 		}
 	}
-	/*
-	componentDidMount() {
-		const script = document.createElement("script");
-		script.src = "hist.js";
-		script.async = true;
-		script.onload = () => this.scriptLoaded();
-		document.body.appendChild(script);
-	  }
-	  */ 
 	setShowInfluenceToggle() { 
 		let x = this.state.showInfluence
 		if ( x === false ) {
@@ -59,8 +43,20 @@ class App extends React.Component {
 		}
 		this.setState({showInfluence:x})
 	}
-
+	clearTheBoard() { 
+		let board = this.state.board
+		board.forEach((row)=>{
+			row.forEach((item)=>{
+				item.owner = this.nill; 
+				item.turnCount = -1;
+				item.black = 0;
+				item.white = 0;
+			});
+		});
+		this.setState({board:board})
+	}
 	addSGFGame2() {
+		this.clearTheBoard() 
 		/// Uhg! I want this method to be in SGF.js but I do not know how to get information from that into 'App.js' this.state...
 		/// TODO: Ask Mark/Sparky
 		const selectObj = document.getElementById("datasetSelector")
@@ -131,7 +127,6 @@ class App extends React.Component {
 		})
 
 		this.setState({"game":a_game})
-		console.log('Setting the game to ' + key + " with " + a_game.length + " items."  )
 	}
 
 	clickOnCell(row, column) {

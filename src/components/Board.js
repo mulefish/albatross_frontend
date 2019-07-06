@@ -23,6 +23,8 @@ class ForegroundTableRow extends React.Component {
             } else if ( owner === this.props.white) {
                 css = "whiteCircle"
                 text = this.props.data[column].turnCount
+            } else {
+                // do not add a visible stone
             }
             cells.push(
                 <td 
