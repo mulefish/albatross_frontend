@@ -32,7 +32,7 @@ class ForegroundTableRow extends React.Component {
                 >
                 <center><div 
                         key={Math.random()} 
-                        className={css}>{text}</div></center>
+                        className={css}></div></center>
                 </td>
             )
         }
