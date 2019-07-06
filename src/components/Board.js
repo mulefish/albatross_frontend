@@ -16,15 +16,21 @@ class ForegroundTableRow extends React.Component {
         for ( let column  = 0; column < 19; column++ ) {
             let owner = this.props.data[column].owner
             let css = ""
-            let text = ""
+            let turnCount = ""
             if ( owner === this.props.black ) {
                 css = "blackCircle"
-                text = this.props.data[column].turnCount
+                turnCount = this.props.data[column].turnCount
+                if ( this.props.showText === false ) { 
+                    turnCount = ""
+                } 
             } else if ( owner === this.props.white) {
                 css = "whiteCircle"
-                text = this.props.data[column].turnCount
+                turnCount = this.props.data[column].turnCount
+                if ( this.props.showText === false ) { 
+                    turnCount = ""
+                } 
             } else {
-                // do not add a visible stone
+                // Do not set the css which would show a visible stone.
             }
             cells.push(
                 <td 
@@ -34,7 +40,7 @@ class ForegroundTableRow extends React.Component {
                 >
                 <center><div 
                         key={Math.random()} 
-                        className={css}></div></center>
+                        className={css}>{turnCount}</div></center>
                 </td>
             )
         }
@@ -61,15 +67,13 @@ class Board extends React.Component {
         for ( let rowIndex = 0 ; rowIndex < 19; rowIndex++ ) { 
             fgRows.push(
                 <ForegroundTableRow 
-                    showInfluence={this.props.showInfluence} 
+                    showText={this.props.showText} 
                     data={this.props.data[rowIndex]} 
                     row={rowIndex} 
                     key={Math.random()} 
                     onClick={this.props.onClick.bind()} 
                     black={this.props.black} 
                     white={this.props.white} 
-                    blackTurn={this.props.blackTurn} 
-                    whiteTurn={this.props.whiteTurn}
                 />
             )
         }
@@ -88,13 +92,23 @@ class Board extends React.Component {
                         </tbody>
                     </table>
                 </div>
-                <input 
-                    type='checkbox' 
-                    id='showInfluence_widget' 
-                    checked={this.props.showInfluence} 
-                    onChange={(e)=>this.props.onChange()}
-                ></input>
-                <label htmlFor="showInfluence_widget"> Show Influence</label>
+
+                <table border='1'><tbody><tr><td className='neutralBG'>
+                        <div className={this.props.turnCount % 2 === 0 ? 'blackCircle' : 'whiteCircle'}></div>
+                    </td><td>
+                        <input 
+                            type='checkbox' 
+                            id='showText_widget' 
+                            checked={this.props.showText} 
+                            onChange={(e)=>this.props.onChange()}
+                        ></input>
+                        <label htmlFor="showText_widget">Show Text</label>
+                    </td>
+                    <td>    
+                        Turn {this.props.turnCount}
+                    </td>
+                    </tr></tbody>
+                </table>
             </div>
         )
     }

@@ -8,8 +8,11 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.clickOnCell = this.clickOnCell.bind(this);
-		this.setShowInfluenceToggle = this.setShowInfluenceToggle.bind(this)
+		this.setShowText = this.setShowText.bind(this)
 		this.addSGFGame2 = this.addSGFGame2.bind(this)
+		this.advanceCursor = this.advanceCursor.bind(this)
+		this.decrementCursor = this.decrementCursor.bind(this)
+		this.clearTheBoard = this.clearTheBoard.bind(this)
 		this.black = "B"
 		this.white = "W"
 		this.turn = this.black
@@ -30,20 +33,41 @@ class App extends React.Component {
 		}
 		this.state = {
 			board: board,
-			showInfluence:true,
-			game:[]
+			showText:true,
+			game:[],
+			cursor:0
 		}
 	}
-	setShowInfluenceToggle() { 
-		let x = this.state.showInfluence
+
+	advanceCursor() { 
+		let x = this.state.cursor
+		x++
+		if ( x > ( this.turn - 1 )) { 
+			x = this.turn - 1
+		} 
+		this.setState({cursor:x})
+	}
+	decrementCursor() {
+		let x = this.state.cursor
+		x--
+		if ( x < 0 ) {
+			x = 0
+		}
+		this.setState({cursor:x})
+
+	}
+
+	setShowText() { 
+		let x = this.state.showText
 		if ( x === false ) {
 			x = true 
 		} else {
 			x = false
 		}
-		this.setState({showInfluence:x})
+		this.setState({showText:x})
 	}
 	clearTheBoard() { 
+		this.turn = 0 
 		let board = this.state.board
 		board.forEach((row)=>{
 			row.forEach((item)=>{
@@ -54,7 +78,12 @@ class App extends React.Component {
 			});
 		});
 		this.setState({board:board})
-	}
+		this.setState({cursor:0})
+		this.turnCount = 0 
+
+		this.setState({"game":[]})
+		this.setState({"cursor":0})
+	}	
 	addSGFGame2() {
 		this.clearTheBoard() 
 		/// Uhg! I want this method to be in SGF.js but I do not know how to get information from that into 'App.js' this.state...
@@ -131,6 +160,7 @@ class App extends React.Component {
 
 	clickOnCell(row, column) {
 		let tmp = this.state.board
+		console.log("Row: " + row + " column: " + column ); 
 		if ( tmp !== undefined && row !== undefined && column !== undefined && tmp[row] !== undefined && tmp[row][column] !== undefined ) {
 			if (tmp[row][column].owner !== this.black && tmp[row][column].owner !== this.white) {
 				tmp[row][column].owner = this.turn
@@ -172,14 +202,17 @@ class App extends React.Component {
 							data = {this.state.board}
 							key = {Math.random()}
 							board = {this.state.board}
-							showInfluence={this.state.showInfluence}
+							showText={this.state.showText}
 							onClick = {this.clickOnCell.bind()} 
-							onChange={this.setShowInfluenceToggle.bind()}
+							onChange={this.setShowText.bind()}
+							turnCount={this.turnCount}
 						></Board>
 					</td>
 					<td valign="top">
-						<button>&gt;&gt;</button>
-            			<button>&lt;&lt;</button>
+						<button  onClick={(e)=>this.clearTheBoard()}>ctb</button>
+						<button  onChange={(e)=>this.advanceCursor()}>&gt;&gt;</button>
+            			<button onChange={(e)=>this.decrementCursor()}>&lt;&lt;</button>
+						
          				<select id="datasetSelector" onChange={(e)=>this.addSGFGame2()}>
                 			<option>select</option>
             				<option>022.sgf</option>
@@ -202,6 +235,7 @@ class App extends React.Component {
 						<SGF 
 							key={Math.random()}
 							gameInfo={this.state.game}
+							cursor={this.state.cursor}
 						></SGF>
 					</td>
 				</tr>
