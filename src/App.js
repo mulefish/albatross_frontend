@@ -1,6 +1,7 @@
 import React from 'react';
 import Board from './components/Board';
 import SGF from './components/SGF';
+import Measurements from './components/Measurements';
 
 const number2letter = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t"]
 
@@ -13,6 +14,7 @@ class App extends React.Component {
 		this.advanceCursor = this.advanceCursor.bind(this)
 		this.decrementCursor = this.decrementCursor.bind(this)
 		this.clearTheBoard = this.clearTheBoard.bind(this)
+		this.doNextTurn = this.doNextTurn.bind(this)
 		this.black = "B"
 		this.white = "W"
 		this.turn = this.black
@@ -35,7 +37,10 @@ class App extends React.Component {
 			board: board,
 			showText:true,
 			game:[],
-			cursor:0
+			cursor:0,
+			currentStoneRow:-1,
+			currentStoneColumn:-1
+
 		}
 	}
 
@@ -159,8 +164,10 @@ class App extends React.Component {
 	}
 
 	clickOnCell(row, column) {
+
+		this.setState({currentStoneRow:row})
+		this.setState({currentStoneColumn:column})
 		let tmp = this.state.board
-		console.log("Row: " + row + " column: " + column ); 
 		if ( tmp !== undefined && row !== undefined && column !== undefined && tmp[row] !== undefined && tmp[row][column] !== undefined ) {
 			if (tmp[row][column].owner !== this.black && tmp[row][column].owner !== this.white) {
 				tmp[row][column].owner = this.turn
@@ -190,7 +197,17 @@ class App extends React.Component {
 			})
 		} 
 	}
+	doNextTurn() { 
+
+		let r = parseInt(Math.random() * 19)  
+		let c = parseInt(Math.random() * 19)  
+		alert("hello " + r + "   c " + c )
+
+
+
+	}
 	render() {
+		
 		return ( 
 			<table border='1'>
 				<tbody>
@@ -206,6 +223,7 @@ class App extends React.Component {
 							onClick = {this.clickOnCell.bind()} 
 							onChange={this.setShowText.bind()}
 							turnCount={this.turnCount}
+							doNextTurn={this.doNextTurn}
 						></Board>
 					</td>
 					<td valign="top">
@@ -240,8 +258,16 @@ class App extends React.Component {
 					</td>
 				</tr>
 				<tr>
-					<td>
-hello world
+					<td valign='top'>
+						<Measurements 
+							key={Math.random()}
+							gameInfo={this.state.game}
+							currentStoneRow = {this.state.currentStoneRow}
+							currentStoneColumn={this.state.currentStoneColumn}
+							board={this.state.board}	
+						>
+
+						</Measurements>
 					</td>
 				</tr>
 				</tbody>
