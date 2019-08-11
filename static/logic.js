@@ -82,6 +82,13 @@ function init() {
     glass_canvas.addEventListener('mousedown', function(evt) { mouseDown(getMousePos(evt));}, false);
     glass_canvas.addEventListener('mousemove', function(evt) { mouseMove(getMousePos(evt));}, false);
 
+    setupBoard()
+} 
+
+function setupBoard() {
+
+
+
     glass_context.font = "10pt sans-serif";
     context.font = "10pt sans-serif";
 
@@ -91,6 +98,10 @@ function init() {
     //context.moveTo(0,100);
     //context.lineTo(333,200);
     context.stroke();
+
+    glass_context.clearRect(0,0,640,640); 
+    context.clearRect(0,0,640,640); 
+
 
     let down = size
     let count = 0
@@ -102,8 +113,6 @@ function init() {
     const saddlebrown= "rgba(139,69,19,0.9)";
     //    const sienna= "rgba(160,82,45,1.0)";
     context.fillStyle = saddlebrown
-    context.lineWidth = "9";
-//    context.fillRect(over, down, 640 - ( size * 2 ) , 640 - ( size * 2 ) );
     context.fillRect(4,4,632,632 )
     context.beginPath();
     context.strokeStyle = "rgba(30,30,30,1.0)"; // gray
@@ -125,8 +134,6 @@ function init() {
         context.lineTo(over, 640 - size)
         context.stroke();
         count++
-        //context.fillText(count, over, 300);
-        //context.fillText(convertToNumberingScheme(count), 200, down);
         over += size
     }
     down = size
@@ -142,7 +149,20 @@ function init() {
             context.fillStyle = "rgba(0,0,0, " + alpha + ")";
             context.fill();
             context.stroke();
-            context.fillText(key, x + 10,y - 5);
         }
     }
+}
+
+function selectHistory() { 
+    const widget = document.getElementById("trainingGame")
+    const selectedHistory = widget.options[widget.selectedIndex].text;
+    console.log(" selected! " + selectedHistory )    
+    for ( let key in stones ) { 
+        stones[key].status = 0 
+    }
+    document.getElementById("turn").innerHTML = "black"
+    document.getElementById("active").innerHTML = ""           
+    active=null; 
+    glass_context.clearRect(0,0,640,640); 
+    setupBoard(); 
 }
