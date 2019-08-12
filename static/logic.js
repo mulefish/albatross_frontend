@@ -142,6 +142,24 @@ function setupBoard() {
     }
 }
 
+
+function reverseString(str) {
+    // Step 1. Use the split() method to return a new array
+    var splitString = str.split(""); // var splitString = "hello".split("");
+    // ["h", "e", "l", "l", "o"]
+ 
+    // Step 2. Use the reverse() method to reverse the new created array
+    var reverseArray = splitString.reverse(); // var reverseArray = ["h", "e", "l", "l", "o"].reverse();
+    // ["o", "l", "l", "e", "h"]
+ 
+    // Step 3. Use the join() method to join all elements of the array into a string
+    var joinArray = reverseArray.join(""); // var joinArray = ["o", "l", "l", "e", "h"].join("");
+    // "olleh"
+    
+    //Step 4. Return the reversed string
+    return joinArray; // "olleh"
+}
+
 function selectHistory() { 
 
     document.getElementById("turn").innerHTML = "black"
@@ -154,9 +172,7 @@ function selectHistory() {
     const selectedHistory = widget.options[widget.selectedIndex].text;
     url = "http://localhost:5000/history/" + selectedHistory + "/"
 
-    active="ap"
-    addStone()
-
+ 
 
     fetch(url)
     .then(response => {
@@ -172,19 +188,21 @@ function selectHistory() {
             x = x.replace("]",""    )
             if ( x.includes("B")) {
                 x = x.replace("B","")
+         //       x = reverseString(x)
                 moves.push({"id":x,"side":"B"})
             } else if ( x.includes("W")) {
                 x = x.replace("W","")
+         //       x = reverseString(x)
                 moves.push({"id":x,"side":"W"})
             }         
         }
 
         for ( index in moves ) {
-            active = moves[index]
-            console.log(active["id"])
-
+            active = moves[index].id
+            console.log("active " + active)
+            addStone()
         }
-
+    
         //console.log(JSON.stringify(moves,null,2))
 
 

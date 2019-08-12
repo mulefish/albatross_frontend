@@ -1,15 +1,3 @@
-const points = new Set()
-points.add("bi")
-points.add("bo")
-points.add("bu")
-points.add("fs")
-points.add("fy")
-points.add("ge")
-points.add("kc")
-points.add("ki")
-points.add("")
-
-const stones = {}
 stones['aa']={"x":32,"y":32,"col":0,"row":0,"count":1,"bi":0,"wi":0,"status":0}
 stones['ab']={"x":32,"y":64,"col":0,"row":1,"count":2,"bi":0,"wi":0,"status":0}
 stones['ac']={"x":32,"y":96,"col":0,"row":2,"count":3,"bi":0,"wi":0,"status":0}

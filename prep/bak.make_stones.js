@@ -31,19 +31,19 @@ function getLetter(number) {
 
 function main() {
     let limit = 19
+    let count = 0
     const size = 32 
     let down = size
     let over = size
-let count = 0 
+
        for (let col = 0; col < limit; col++) {
         for (let row = 0; row < limit; row++) {
 
+            const key = col + "_" + row
+            count++ 
 
-            let left = getLetter(col + 1)
-            let right = getLetter(row + 1)
-   		let id = left + right
+            let id = getLetter(count)
             id = id.toLowerCase()
-		count++
             let x = {'x':over,'y':down,'col':col,'row':row, 'count':count, 'bi':0, 'wi':0, 'status':0}
             console.log(`stones['${id}']=${JSON.stringify(x)  }`)
             down += size
