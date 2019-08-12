@@ -1,13 +1,15 @@
 const points = new Set()
-points.add("bi")
-points.add("bo")
-points.add("bu")
-points.add("fs")
-points.add("fy")
-points.add("ge")
-points.add("kc")
-points.add("ki")
-points.add("")
+points.add("dd")
+points.add("pd")
+points.add("jd")
+points.add("dj")
+points.add("pj")
+points.add("jj")
+
+points.add("dp")
+points.add("pp")
+points.add("jp")
+
 
 const stones = {}
 stones['aa']={"x":32,"y":32,"col":0,"row":0,"count":1,"bi":0,"wi":0,"status":0}
