@@ -58,15 +58,7 @@ function drawLine(pos) {
             glass_context.clearRect(0,0,640,640); 
             glass_context.strokeStyle = "rgba(255,255,255,1.0)"
             glass_context.fillStyle = "rgba(255,255,255,0.3)"
-            /* 
-            glass_context.beginPath();
-            glass_context.moveTo(pos.x, pos.y);
-            glass_context.lineTo(x,y);
-            glass_context.stroke();
-            glass_context.closePath();
-            */
             glass_context.fillRect(x - 16,y - 16,32,32 )
-
 
             document.getElementById("active").innerHTML = active
         } else {
@@ -86,9 +78,6 @@ function init() {
 } 
 
 function setupBoard() {
-
-
-
     glass_context.font = "10pt sans-serif";
     context.font = "10pt sans-serif";
 
@@ -154,15 +143,59 @@ function setupBoard() {
 }
 
 function selectHistory() { 
-    const widget = document.getElementById("trainingGame")
-    const selectedHistory = widget.options[widget.selectedIndex].text;
-    console.log(" selected! " + selectedHistory )    
-    for ( let key in stones ) { 
-        stones[key].status = 0 
-    }
+
     document.getElementById("turn").innerHTML = "black"
     document.getElementById("active").innerHTML = ""           
     active=null; 
     glass_context.clearRect(0,0,640,640); 
     setupBoard(); 
+
+    const widget = document.getElementById("trainingGame")
+    const selectedHistory = widget.options[widget.selectedIndex].text;
+    url = "http://localhost:5000/history/" + selectedHistory + "/"
+
+    active="ap"
+    addStone()
+
+
+    fetch(url)
+    .then(response => {
+        return response.json()
+    })
+    .then(data => {
+        data = data.replace(/"/g,"")
+        raw_moves = data.split(";")
+        let moves = []
+        for ( let index in raw_moves ) { 
+            let x = raw_moves[index]
+            x = x.replace("[","")
+            x = x.replace("]",""    )
+            if ( x.includes("B")) {
+                x = x.replace("B","")
+                moves.push({"id":x,"side":"B"})
+            } else if ( x.includes("W")) {
+                x = x.replace("W","")
+                moves.push({"id":x,"side":"W"})
+            }         
+        }
+
+        for ( index in moves ) {
+            active = moves[index]
+            console.log(active["id"])
+
+        }
+
+        //console.log(JSON.stringify(moves,null,2))
+
+
+    })
+    .catch(err => {
+        alert("Failed to load moves: " + err )
+    })
+
+
+
+    for ( let key in stones ) { 
+        stones[key].status = 0 
+    }
 }

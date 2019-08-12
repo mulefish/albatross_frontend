@@ -33,23 +33,31 @@
 
     <select id="trainingGame" onChange="selectHistory();">
             <option>Choose training</option>
-    
-        <option>022.sgf</option>
-    <option>035.sgf</option>
-    <option>051.sgf</option>
-    <option>059.sgf</option>
-    <option>062.sgf</option>
-    <option>069.sgf</option>
-    <option>079.sgf</option>
-    <option>082.sgf</option>
-    <option>086.sgf</option>
-    <option>093.sgf</option>
-    <option>104.sgf</option>
-    <option>111.sgf</option>
-    <option>120.sgf</option>
-    <option>122.sgf</option>
-    <option>128.sgf</option>
     </select>
+
+    <hr> 
+    <script>
+        function loadGames() { 
+            fetch('http://localhost:5000/histories/')
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                let select = document.getElementById("trainingGame");
+                for ( index in data ) {
+                    let option = document.createElement("option");
+                    option.text = data[index];
+                    select.appendChild(option);
+                }
+            })
+            .catch(err => {
+                alert("Failed to load training game names: " + err )
+            })
+        }
+        loadGames()
+    </script>
+
+
 </td>
 </tr>
 </table>

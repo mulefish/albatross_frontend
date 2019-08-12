@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,jsonify
 import sqlite3 as sql
 app = Flask(__name__)
 
@@ -46,7 +46,36 @@ def list():
    return render_template("list.html",rows = rows)
 
 
-@app.route('/game')
+@app.route('/history/<filename>/')
+def get_history(filename):
+   con = sql.connect("prep/games.db")
+   con.row_factory = sql.Row
+   cur = con.cursor()
+   query = "select * from games where name = '{0}'".format(filename)
+   cur.execute(query )
+   moves = cur.fetchone()
+   j = jsonify(moves["moves"])
+   return j
+
+@app.route('/histories/')
+def get_histories():
+   con = sql.connect("prep/games.db")
+   con.row_factory = sql.Row
+   
+   cur = con.cursor()
+   cur.execute("select name from games")
+   
+   rows = cur.fetchall()
+   r = [] 
+   for row in rows:  
+      r.append(row["name"])
+   j = jsonify(r)
+   print(j)
+   return j
+
+
+
+@app.route('/game/')
 def game():
    return render_template("game.html")
 
